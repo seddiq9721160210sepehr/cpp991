@@ -8,7 +8,7 @@ class complexCls{
   //explicit complexCls(double m=0 , double n=0) {r=m;i=n;}
   public:
   complexCls(double m = 0, double n = 0) {
-    r = m; 
+    r = m;
     i = n;
   }
   //complexCls(int m=0 , int n=0) {r=m;i=n;}

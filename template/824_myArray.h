@@ -1,9 +1,10 @@
 #pragma once
 #include <iostream>
 #include <cstdlib>
-#include "840_complexcls.h"
-#include "840_complexcls.h"
 using namespace std;
+
+template<typename T> class myArray;
+template<typename T> bool operator== (const myArray<T>& a, const myArray<T>& b);
 
 template<typename T> class myArray{
   static const int MAX = 100;
@@ -65,7 +66,9 @@ template<typename T> class myArray{
   }
 
   // https://en.cppreference.com/w/cpp/language/friend
-  template<typename K> friend bool operator== (const myArray<K>& a, const myArray<K>& b);
+  //~ template<typename K>  friend bool operator== (const myArray<K>& a, const myArray<K>& b);
+  // https://stackoverflow.com/a/13451992/886607
+  friend bool operator== <>(const myArray& a, const myArray& b);
 
   friend istream& operator>> (istream& in1, myArray& b){
     // delete[] b.a;  b.a = nullptr;
@@ -92,5 +95,17 @@ template<typename T> class myArray{
       out1 << "a[" << i << "]= " << b.a[i] << endl;
     return out1;
   }
-
 };
+
+// https://stackoverflow.com/a/1639821/886607
+template<typename K> bool operator==(const myArray<K>& a, const myArray<K>& b){ // < > <= >= !=
+  bool retVal = false;
+  int i = 0;
+  if(a.n == b.n)
+    for(i = 0; i < a.n; i++)
+      if(a.a[i] != b.a[i])
+        break;
+  if(i == a.n)
+    retVal = true;
+  return retVal;
+}
